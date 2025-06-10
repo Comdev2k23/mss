@@ -49,10 +49,14 @@ export function LoginForm({
       const res = await axios.post("https://mss-express.onrender.com/api/auth/login", values)
 
       const token = res.data.token
-      localStorage.setItem("token", token)
+      const role = res.data.user.role
 
-      console.log("✅ Logged in successfully")
-      router.push("/dashboard") // Change to your desired page
+      localStorage.setItem("token", token)
+      localStorage.setItem("role", role)
+
+
+      //redirect to dashboard based on role
+      router.push(`/dashboard?role=${role}`)
 
     } catch {
       console.error("❌ Login failed:")
