@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import AdminAnalytics from '@/components/admin-analytics';
 import PendingStatus from '@/components/admin-pending';
 import ApprovedStatus from '@/components/admin-approved';
+import OngoingDefense from '@/components/admin-ongoing';
+import SchedulePage from './@schedules/page';
 
 
 type DecodedToken = {
@@ -41,11 +43,18 @@ function AdminPage() {
   
 
   return (
-    <div className='flex gap-2 mt-2'>
-        <AdminAnalytics />
-        <PendingStatus />
-        <ApprovedStatus />
-    </div>
+          <div className='flex-col gap-2 mt-2'>
+              <div className='flex gap-2'>
+                <AdminAnalytics />
+            <PendingStatus />
+            <ApprovedStatus />
+            <OngoingDefense />
+              </div>
+            <div>
+               <SchedulePage />
+            </div>
+        </div>
+        
   )
 }
 
