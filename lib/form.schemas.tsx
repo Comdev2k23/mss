@@ -13,6 +13,8 @@ export const loginFormSchema = z.object({
     password: z.string().min(6, "Password must at least 6 characters")
 })
 
+
+
 export type Schedule = {
   _id: string
   studentId: string

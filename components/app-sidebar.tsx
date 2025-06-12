@@ -8,6 +8,7 @@ import {
   Settings,
   User,
   LogOutIcon,
+  FileSliders,
 } from "lucide-react"
 
 import { toast } from "sonner"
@@ -65,6 +66,12 @@ export function AppSidebar() {
       icon: Inbox,
       type: "link",
       href: "/dashboard/inbox",
+    },
+    {
+      title: "Update Schedule by ID",
+      icon: FileSliders,
+      type: "link",
+      href: "/dashboard/ ",
     },
     {
       title: "Calendar",

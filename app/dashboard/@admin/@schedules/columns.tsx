@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { Schedule } from "@/lib/form.schemas"
-import { MoreHorizontal,  Trash2Icon, CopyIcon } from "lucide-react"
+import { MoreHorizontal,  Trash2Icon, CopyIcon, FileSliders } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -28,6 +28,7 @@ import {
 
 import axios from "axios"
 import { toast } from "sonner"
+import Link from "next/link"
 
 const btnDelete =  {
     icon: Trash2Icon
@@ -36,6 +37,13 @@ const btnDelete =  {
 const btnCopy = {
     icon: CopyIcon
 }
+
+const btnUpdate = {
+  icon: FileSliders
+}
+
+
+
   const deleteSchedule = async (schedId: string) => {
   try {
     const token = localStorage.getItem("token")
@@ -112,6 +120,13 @@ export const columns: ColumnDef<Schedule>[] = [
               onClick={() => navigator.clipboard.writeText(schedule._id)}
             >
               <btnCopy.icon /> schedule ID
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <btnUpdate.icon />
+            <Link href={`/schedules/${schedule._id}`}>
+                Update Schedule
+              </Link>
+
             </DropdownMenuItem>
               <AlertDialog>
               <AlertDialogTrigger className="text-sm p-2 flex gap-2 items-center hover:bg-sidebar-accent w-full rounded-lg ">

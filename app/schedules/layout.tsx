@@ -7,9 +7,8 @@ export default function Layout({children}:{children: React.ReactNode}) {
   return (
      <SidebarProvider >
       <AppSidebar />
-      <main className='flex gap-4'>
+      <main className='flex gap-4 w-full'>
         <SidebarTrigger />  {children}
-        
       </main>
     </SidebarProvider>
   )
