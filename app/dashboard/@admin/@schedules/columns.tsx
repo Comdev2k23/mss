@@ -42,7 +42,10 @@ const btnUpdate = {
   icon: FileSliders
 }
 
-
+const handleCopySchedId = (schedId:string) => {
+  navigator.clipboard.writeText(schedId)
+  toast("Schedule ID Copied ✅ ")
+}
 
   const deleteSchedule = async (schedId: string) => {
   try {
@@ -117,7 +120,7 @@ export const columns: ColumnDef<Schedule>[] = [
           <DropdownMenuContent align="end" >
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(schedule._id)}
+              onClick={() => handleCopySchedId(schedule._id)}
             >
               <btnCopy.icon /> schedule ID
             </DropdownMenuItem>
