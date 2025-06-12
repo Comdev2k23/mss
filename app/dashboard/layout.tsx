@@ -1,15 +1,18 @@
-'use client'
+'use client';
 
+import React, { useEffect, useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
-import { useSearchParams } from 'next/navigation'
-import React from 'react'
+type DecodedToken = {
+  role: 'admin' | 'student' | 'adviser' | 'panel';
+};
 
 type DashboardProps = {
-  admin: React.ReactNode
-  adviser: React.ReactNode
-  student: React.ReactNode
-  panel: React.ReactNode
-}
+  admin: React.ReactNode;
+  adviser: React.ReactNode;
+  student: React.ReactNode;
+  panel: React.ReactNode;
+};
 
 export default function DashboardLayout({
   admin,
@@ -17,19 +20,39 @@ export default function DashboardLayout({
   student,
   panel,
 }: DashboardProps) {
-  const searchParams = useSearchParams()
-  const segment = searchParams.get('role')
+  const [role, setRole] = useState<DecodedToken['role'] | null>(null);
 
-  switch (segment) {
+  useEffect(() => {
+    try {
+      const token = localStorage.getItem('token'); // 🔧 Fix: 'token' should be a string
+
+      if (!token) {
+        alert('Invalid token');
+        return;
+      }
+
+      const decoded = jwtDecode<DecodedToken>(token);
+      setRole(decoded.role);
+    } catch (error) {
+      console.error('Token decoding failed:', error);
+    }
+  }, []);
+
+  // Show loading or fallback while decoding token
+  if (!role) {
+    return <p>Loading dashboard...</p>;
+  }
+
+  switch (role) {
     case 'admin':
-      return <>{admin}</>
+      return <>{admin}</>;
     case 'student':
-      return <>{student}</>
+      return <>{student}</>;
     case 'adviser':
-      return <>{adviser}</>
+      return <>{adviser}</>;
     case 'panel':
-      return <>{panel}</>
+      return <>{panel}</>;
     default:
-      return <p>Invalid role or segment.</p>
+      return <p>Invalid role or segment.</p>;
   }
 }

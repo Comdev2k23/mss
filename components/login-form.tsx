@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -17,22 +17,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { loginFormSchema } from "@/lib/form.schemas"
-import Link from "next/link"
-import axios from "axios"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
+} from "@/components/ui/form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { loginFormSchema } from "@/lib/form.schemas";
+import Link from "next/link";
+import axios, {AxiosError} from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const router = useRouter()
-  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -40,29 +41,42 @@ export function LoginForm({
       email: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
-    setError(null)
+    setError(null);
+    setIsLoading(true);
 
     try {
-      const res = await axios.post("https://mss-express.onrender.com/api/auth/login", values)
+      const cleanedValues = {
+        email: values.email.trim(),
+        password: values.password.trim(),
+      };
 
-      const token = res.data.token
-      const role = res.data.user.role
+      const res = await axios.post("https://mss-express.onrender.com/api/auth/login", cleanedValues);
+      const { token, user } = res.data;
 
-      localStorage.setItem("token", token)
-      localStorage.setItem("role", role)
+      const role = user.role;
+      const validRoles = ['admin', 'student', 'adviser', 'panel'];
 
+      if (!validRoles.includes(role)) {
+        setError("Invalid user role");
+        return;
+      }
 
-      //redirect to dashboard based on role
-      router.push(`/dashboard?role=${role}`)
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
 
-    } catch {
-      console.error("❌ Login failed:")
-      setError("Login failed")
+      router.push('/dashboard');
+    } catch (err) {
+     if (axios.isAxiosError(err)) {
+          const axiosErr = err as AxiosError
+          setError(`Error ${axiosErr.response?.status}: ${axiosErr.response?.data}`)
+      }
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -73,6 +87,7 @@ export function LoginForm({
             Enter your email below to login to your account
           </CardDescription>
         </CardHeader>
+
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -87,7 +102,12 @@ export function LoginForm({
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="text" placeholder="Enter your email" {...field} />
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        autoComplete="email"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,15 +121,20 @@ export function LoginForm({
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Enter your password"
+                        autoComplete="current-password"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Login
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
 
               <div className="mt-2 text-center text-sm">
@@ -123,5 +148,5 @@ export function LoginForm({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

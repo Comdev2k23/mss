@@ -1,4 +1,18 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+"use client"
+
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  User,
+  LogOutIcon,
+} from "lucide-react"
+
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 import {
   Sidebar,
@@ -11,36 +25,79 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-]
+// ✅ Define item types
+type MenuItem =
+  | {
+      title: string
+      icon: React.ElementType
+      type: "link"
+      href: string
+    }
+  | {
+      title: string
+      icon: React.ElementType
+      type: "action"
+      onClick: () => void
+    }
 
 export function AppSidebar() {
+  const router = useRouter()
+
+  function handleLogout() {
+    localStorage.removeItem("token")
+    localStorage.removeItem("role")
+    router.push("/login")
+
+    toast("Logged out", {
+      description: "You have been successfully logged out.",
+    })
+  }
+
+  const menuItems: MenuItem[] = [
+    {
+      title: "Home",
+      icon: Home,
+      type: "link",
+      href: "/dashboard",
+    },
+    {
+      title: "Inbox",
+      icon: Inbox,
+      type: "link",
+      href: "/dashboard/inbox",
+    },
+    {
+      title: "Calendar",
+      icon: Calendar,
+      type: "action",
+      onClick: () =>
+        toast("Calendar Clicked", {
+          description: "Display calendar data here.",
+        }),
+    },
+    {
+      title: "Update User",
+      icon: User,
+      type: "action",
+      onClick: () =>
+        toast("User Settings", {
+          description: "User update triggered.",
+        }),
+    },
+    {
+      title: "Search",
+      icon: Search,
+      type: "link",
+      href: "/dashboard/search",
+    },
+    {
+      title: "Settings",
+      icon: Settings,
+      type: "link",
+      href: "/dashboard/settings",
+    },
+  ]
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -48,20 +105,34 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                  {item.type === "link" ? (
+                    <SidebarMenuButton asChild>
+                      <Link href={item.href}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  ) : (
+                    <SidebarMenuButton onClick={item.onClick}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
+                    </SidebarMenuButton>
+                  )}
                 </SidebarMenuItem>
               ))}
+
+              <SidebarMenuItem className="list-none mt-1">
+                <SidebarMenuButton onClick={handleLogout}>
+                  <LogOutIcon />
+                  <span>Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   )
-}   
+}
