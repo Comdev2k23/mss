@@ -6,6 +6,7 @@ import { useParams } from "next/navigation"
 import AdminEditSchedule from "@/components/admin-edit-schedule"
 
 
+
 type PanelStatus = {
   name: string
   status: "pending" | "approved" | "rejected"

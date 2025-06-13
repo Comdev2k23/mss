@@ -132,7 +132,7 @@ export const columns: ColumnDef<Schedule>[] = [
 
             </DropdownMenuItem>
               <AlertDialog>
-              <AlertDialogTrigger className="text-sm p-2 flex gap-2 items-center hover:bg-sidebar-accent w-full rounded-lg ">
+              <AlertDialogTrigger className="text-sm p-2 flex gap-2 items-center hover:bg-sidebar-accent w-full rounded-lg text-red-700 ">
                 <btnDelete.icon className="size-4"/>
                 Delete</AlertDialogTrigger>
               <AlertDialogContent>
