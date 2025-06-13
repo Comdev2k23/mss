@@ -78,11 +78,8 @@ export function AppSidebar() {
     {
       title: "Update User",
       icon: User,
-      type: "action",
-      onClick: () =>
-        toast("User Settings", {
-          description: "User update triggered.",
-        }),
+      type: "link",
+      href: "/users"
     },
     {
       title: "Search",
