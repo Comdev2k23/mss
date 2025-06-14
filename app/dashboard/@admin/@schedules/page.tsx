@@ -40,7 +40,7 @@ export default function SchedulePage() {
     }
 
     fetchSchedules()
-  }, [])
+  }, [schedules])
 
   if (error) {
     return <div className="text-red-500">{error}</div>

@@ -18,10 +18,17 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { AlertCircleIcon, BadgeCheckIcon, CheckIcon } from "lucide-react"
+import { AlertCircleIcon, BadgeCheckIcon, CheckIcon, FileSliders } from "lucide-react"
+import { Button } from '@/components/ui/button'
 
 export default function InboxPage() {
   const [schedules, setSchedules] = useState<Schedule []>([])
+
+  const router = useRouter()
+
+  const handleUpdate = (id: string) => {
+    router.push(`/schedules/${id}`)
+  } 
 
 
   useEffect(()=> {
@@ -66,7 +73,8 @@ export default function InboxPage() {
             <CardTitle>{schedule.manuscriptTitle}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>Student:{schedule.studentName}</p>
+          <div>
+              <p><strong>Student:</strong> {schedule.studentName}</p>
             <p><strong>Date:</strong> {new Date(schedule.defenseDate).toLocaleDateString()}</p>
             <p><strong>Panel:</strong></p>
             <ul className="ml-4 list-disc ">
@@ -78,8 +86,15 @@ export default function InboxPage() {
                     {panel.status}
                   </Badge>  
                 </li>
-              ))}
+              ))
+              }
             </ul>
+                <div className='flex justify-center mt-2'>
+              <Button variant={'link'} onClick={() => handleUpdate(schedule._id)}>
+               <FileSliders />
+               update schedule</Button>
+          </div>
+          </div>
           </CardContent>
         </Card>
       ))}

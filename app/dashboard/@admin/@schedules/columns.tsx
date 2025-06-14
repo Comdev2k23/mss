@@ -59,7 +59,6 @@ const handleCopySchedId = (schedId:string) => {
       }
     )
     console.log("Deleted:", res.data)
-    window.location.reload() 
      toast("Schedule deleted", {
     description: "Selected schedule deleted  successfully✅.",
     })
