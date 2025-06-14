@@ -33,7 +33,7 @@ export default function UserPage() {
     }
 
     getData()
-  }, [data])
+  }, [])
 
   if (loading) {
     return <p className="text-center py-10">Loading users...</p>

@@ -1,5 +1,5 @@
 'use client'
-
+import { CalendarCheck } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import axios,{AxiosError} from 'axios'
 import {
@@ -61,8 +61,11 @@ export default function ApprovedStatus() {
               {error ? (
                 <p className="text-red-500">{error}</p>
               ) : (
-                <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
+                  <div className='flex gap-2 justify-center items-center'>
+                    <CalendarCheck size={31} />
+                     <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
                     {schedules.filter(schedule => schedule.status === 'approved').length}</h1>
+                  </div>
               )}
             </CardContent>
             <CardFooter>

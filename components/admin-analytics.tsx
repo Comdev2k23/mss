@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { User } from 'lucide-react'
 
 
 type User = {
@@ -62,8 +63,12 @@ export default function AdminAnalytics() {
           {error ? (
             <p className="text-red-500">{error}</p>
           ) : (
+            <div className='flex gap-2 justify-center items-center'>
+                <User size={31} />
             <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
                 {users.length}</h1>
+            </div>
+          
           )}
         </CardContent>
         <CardFooter>

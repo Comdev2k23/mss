@@ -83,10 +83,9 @@ export function AppSidebar() {
       title: "Calendar",
       icon: Calendar,
       type: "action",
-      onClick: () =>
-        toast("Calendar Clicked", {
-          description: "Display calendar data here.",
-        }),
+      onClick: () => {
+        router.push('/calendar')
+      }
     },
     {
       key: 'update',

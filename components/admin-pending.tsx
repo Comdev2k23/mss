@@ -1,5 +1,6 @@
 'use client'
 
+import { CircleEllipsis } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import axios,{AxiosError} from 'axios'
 import {
@@ -61,8 +62,12 @@ export default function PendingStatus() {
               {error ? (
                 <p className="text-red-500">{error}</p>
               ) : (
+                <div className='flex gap-2 justify-center items-center'>
+                   <CircleEllipsis size={31}/>
                 <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
                     {schedules.filter(schedule => schedule.status === 'pending').length}</h1>
+                </div>
+               
               )}
             </CardContent>
             <CardFooter>

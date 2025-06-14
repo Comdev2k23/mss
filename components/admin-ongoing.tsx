@@ -1,5 +1,5 @@
 'use client'
-
+import { RefreshCcwDot } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
 import axios,{AxiosError} from 'axios'
 import {
@@ -33,7 +33,7 @@ export default function OngoingDefense() {
           return
         }
 
-        const res = await axios.get('https://mss-express.onrender.com/api/schedules/', {
+        const res = await axios.get('https://mss-express.onrender.com/api/schedules/admin/approved-schedules', {
           headers: { Authorization: `Bearer ${token}` },
         })
 
@@ -61,8 +61,12 @@ export default function OngoingDefense() {
               {error ? (
                 <p className="text-red-500">{error}</p>
               ) : (
+                <div className='flex gap-2 justify-center items-center'>
+                   <RefreshCcwDot size={31} />
                 <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
                     {schedules.filter(schedule => schedule.status === 'pending').length}</h1>
+                </div>
+               
               )}
             </CardContent>
             <CardFooter>

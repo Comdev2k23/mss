@@ -20,6 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { AlertCircleIcon, BadgeCheckIcon, CheckIcon, FileSliders } from "lucide-react"
 import { Button } from '@/components/ui/button'
+import { AlertInbox } from '@/components/alert-inbox'
 
 export default function InboxPage() {
   const [schedules, setSchedules] = useState<Schedule []>([])
@@ -64,8 +65,8 @@ export default function InboxPage() {
           <h1 className="text-2xl font-bold">
       Schedules waiting for admin approval: 
     </h1>
-       <div className="flex max-h-72 gap-4 p-4 mt-4">
-      { schedules.length === 0 && <p>No schedules ready for approval.</p>}
+       <div className="flex max-h-72 gap-4 p-4 mt-4 justify-center">
+      { schedules.length === 0 && <AlertInbox />}
       
       {schedules.map((schedule) => (
         <Card key={schedule._id}>
