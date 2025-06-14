@@ -62,21 +62,20 @@ const handleCopyUserId = (userId:string) => {
   toast("User ID Copied ✅ ")
 }
 
-  const deleteSchedule = async (userId: string) => {
+  const deleteUser = async (userId: string) => {
   try {
     const token = localStorage.getItem("token")
     const res = await axios.delete(
-      `https://mss-express.onrender.com/api/users/admin/delete-user/${userId}`,
+      `https://mss-express.onrender.com/api/users/delete-user/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     )
-    console.log("Deleted:", res.data)
-    window.location.reload() 
-     toast("Schedule deleted", {
-    description: "Selected schedule deleted  successfully✅.",
+    console.log("Deleted:", res.data) 
+     toast("User deleted", {
+    description: "Selected user deleted  successfully✅.",
     })
   } catch (error) {
     console.error("Failed to delete schedule:", error)
@@ -138,7 +137,7 @@ export const columns: ColumnDef<User>[] = [
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={() => deleteSchedule(user._id)}>Continue</AlertDialogAction>
+                  <AlertDialogAction onClick={() => deleteUser(user._id)}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

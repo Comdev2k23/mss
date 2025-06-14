@@ -78,7 +78,7 @@ export default function AdminEditUser({ userId }: { userId: string }) {
 
       await axios.patch(
         `https://mss-express.onrender.com/api/users/update-user/${userId}`,
-        { role: newRole }, // assuming your API accepts this structure
+        { role: newRole }, 
         {
           headers: {
             Authorization: `Bearer ${token}`,
