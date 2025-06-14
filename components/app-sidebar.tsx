@@ -1,4 +1,6 @@
 "use client"
+import React from "react"
+
 
 import {
   Calendar,
@@ -24,17 +26,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import InboxNotification from "./inbox-notification"
 
 // ✅ Define item types
 type MenuItem =
   | {
-      title: string
+      key: string
+      title: string | React.ReactNode
       icon: React.ElementType
       type: "link"
       href: string
     }
   | {
-      title: string
+      key: string
+      title: string |React.ReactNode
       icon: React.ElementType
       type: "action"
       onClick: () => void
@@ -55,18 +60,26 @@ export function AppSidebar() {
 
   const menuItems: MenuItem[] = [
     {
+      key: 'home',
       title: "Home",
       icon: Home,
       type: "link",
       href: "/dashboard",
     },
     {
-      title: "Inbox",
+      key: "inbox",
+      title: <span className="flex items-center gap-2">
+        Inbox
+        {<InboxNotification />}
+      </span>,
       icon: Inbox,
-      type: "link",
-      href: "/dashboard/inbox",
+      type: "action",
+      onClick() {
+        router.push('/inbox')
+      },
     },
     {
+      key: 'calendar',
       title: "Calendar",
       icon: Calendar,
       type: "action",
@@ -76,22 +89,25 @@ export function AppSidebar() {
         }),
     },
     {
+      key: 'update',
       title: "Update User",
       icon: User,
       type: "link",
       href: "/users"
     },
     {
+      key: 'search',
       title: "Search",
       icon: Search,
       type: "link",
-      href: "/dashboard/search",
+      href: "/search",
     },
     {
+      key: 'settings',
       title: "Settings",
       icon: Settings,
       type: "link",
-      href: "/dashboard/settings",
+      href: "/settings",
     },
   ]
 
@@ -103,7 +119,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.key}>
                   {item.type === "link" ? (
                     <SidebarMenuButton asChild>
                       <Link href={item.href}>
@@ -119,7 +135,6 @@ export function AppSidebar() {
                   )}
                 </SidebarMenuItem>
               ))}
-
               <SidebarMenuItem className="list-none mt-1">
                 <SidebarMenuButton onClick={handleLogout}>
                   <LogOutIcon />

@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios"
 import { DataTable } from "@/app/dashboard/@admin/@schedules/data-table" // update this path if needed
 import { columns } from "./columns"
 import { Schedule } from "@/lib/form.schemas" // make sure this matches your type
+import { toast } from "sonner"
 
 export default function SchedulePage() {
   const [schedules, setSchedules] = useState<Schedule[]>([])
@@ -16,7 +17,7 @@ export default function SchedulePage() {
         const token = localStorage.getItem("token")
         if (!token) {
           setError("No token found.")
-          return
+          return toast('No token ')
         }
 
         const res = await axios.get("https://mss-express.onrender.com/api/schedules/", {
@@ -25,7 +26,7 @@ export default function SchedulePage() {
           },
         })
 
-        setSchedules(res.data) // assumes your API returns an array of Schedule objects
+        setSchedules(res.data) 
       } catch (err) {
         if (axios.isAxiosError(err)) {
           const axiosErr = err as AxiosError
