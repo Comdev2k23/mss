@@ -101,13 +101,6 @@ export function AppSidebar() {
       type: "link",
       href: "/search",
     },
-    {
-      key: 'settings',
-      title: "Settings",
-      icon: Settings,
-      type: "link",
-      href: "/settings",
-    },
   ]
 
   return (
@@ -134,6 +127,7 @@ export function AppSidebar() {
                   )}
                 </SidebarMenuItem>
               ))}
+              
               <SidebarMenuItem className="list-none mt-1">
                 <SidebarMenuButton onClick={handleLogout}>
                   <LogOutIcon />
