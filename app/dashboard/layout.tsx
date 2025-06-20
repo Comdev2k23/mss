@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 type DecodedToken = {
   role: 'admin' | 'student' | 'adviser' | 'panel';
@@ -21,13 +23,14 @@ export default function DashboardLayout({
   panel,
 }: DashboardProps) {
   const [role, setRole] = useState<DecodedToken['role'] | null>(null);
-
+ const router = useRouter()
   useEffect(() => {
     try {
       const token = localStorage.getItem('token'); // 🔧 Fix: 'token' should be a string
-
+     
       if (!token) {
-        alert('Invalid token');
+        router.push('/');
+        alert('Invalid toke or Expired 🍪')
         return;
       }
 

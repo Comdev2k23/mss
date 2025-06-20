@@ -27,6 +27,7 @@ function AdminPage() {
     const token = localStorage.getItem('token')
 
     if (!token) {
+      router.push('/')
       return alert('Invalid Token')
     }
 

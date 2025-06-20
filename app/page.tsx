@@ -13,10 +13,11 @@ export default function Home() {
        
         <div className="flex justify-center gap-2 md:justify-start">
            
-            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+            <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md 
+            cursor-pointer">
              <ModeToggle />
             </div>
-            <h1 className="font-bold ml-2">MSS</h1>
+            <h1 className="font-bold ml-2 cursor-pointer">MSS</h1>
           
         </div>
 
