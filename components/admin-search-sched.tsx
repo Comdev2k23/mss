@@ -79,7 +79,7 @@ export function ScheduleSearch() {
       setLoadingUsers(true)
       const token = localStorage.getItem("token")
       const res = await axios.get(
-        `https://mss-express.onrender.com/api/users/search?q=${keyword}`,
+        `https://mss-express.onrender.com/api/users/admin/search?q=${keyword}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -108,8 +108,13 @@ export function ScheduleSearch() {
   }
 
   //Handle update button for schedule
-  function handleUpdate (schedId :string) {
+  function handleSchedUpdate (schedId :string) {
     router.push(`/schedules/${schedId}`)
+  }
+
+  //Handle update button for schedule
+  function handleUserUpdate (userId :string) {
+    router.push(`/users/${userId}`)
   }
 
   return (
@@ -155,7 +160,7 @@ export function ScheduleSearch() {
                       <Input placeholder="e.g. John Mark" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Search user by name.
+                      Search user by name or by email.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -187,7 +192,7 @@ export function ScheduleSearch() {
             {schedules.map((sched: any) => (
               <li key={sched._id} className="border p-2 rounded shadow">
                 <strong>{sched.studentName}</strong> - {sched.manuscriptTitle}<br />
-                Section: {sched.section} | Room: {sched.room} | Status: {sched.status} <Button onClick={() => handleUpdate(sched._id)}>Update</Button>
+                Section: {sched.section} | Room: {sched.room} | Status: {sched.status} <Button onClick={() => handleSchedUpdate(sched._id)}>Update</Button>
               </li>
             ))}
           </ul>
@@ -213,7 +218,7 @@ export function ScheduleSearch() {
           <ul className="space-y-2">
             {users.map((user: any) => (
               <li key={user._id} className="border p-2 rounded shadow">
-                <strong>{user.name}</strong> - {user.email}
+                <strong>{user.name}</strong> - {user.email} | Role: {user.role} <Button onClick={() => handleUserUpdate(user._id)}>Update</Button>
               </li>
             ))}
           </ul>
