@@ -6,10 +6,18 @@ import { DataTable } from "@/app/dashboard/@admin/@schedules/data-table" // upda
 import { columns } from "./columns"
 import { Schedule } from "@/lib/form.schemas" // make sure this matches your type
 import { toast } from "sonner"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function SchedulePage() {
   const [schedules, setSchedules] = useState<Schedule[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [statusFilter, setStatusFilter] = useState("All")
 
   useEffect(() => {
     async function fetchSchedules() {
@@ -40,16 +48,38 @@ export default function SchedulePage() {
     }
 
     fetchSchedules()
-  }, [schedules])
+  }, [])
 
   if (error) {
     return <div className="text-red-500">{error}</div>
   }
 
+  const filteredSchedules = schedules.filter((sched) =>
+  statusFilter === "All"
+    ? true
+    : sched.status.toLowerCase() === statusFilter.toLowerCase()
+)
+
+
   return (
     <div className="p-4">
+ <div className="flex justify-end mb-4">
+  <Select value={statusFilter} onValueChange={setStatusFilter}>
+    <SelectTrigger className="w-[200px]">
+      <SelectValue placeholder="Filter by status" />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="All">All</SelectItem>
+      <SelectItem value="Approved">Approved</SelectItem>
+      <SelectItem value="Pending">Pending</SelectItem>
+      <SelectItem value="Rejected">Rejected</SelectItem>
+    </SelectContent>
+  </Select>
+</div>
+
+
       <h1 className="text-2xl font-bold mb-4">Schedule List</h1>
-      <DataTable columns={columns} data={schedules} />
+      <DataTable columns={columns} data={filteredSchedules} />
     </div>
   )
 }
