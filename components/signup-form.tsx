@@ -19,12 +19,20 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { signupFormSchema } from "@/lib/form.schemas"
 import Link from "next/link"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import axios, { AxiosError } from "axios"
+import { toast } from "sonner"
 
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+
+  const router = useRouter()
+  const [error, setError] = useState<string | null >(null)
+  const [isLoading, setIsLoading] = useState(false)
 
     const form = useForm<z.infer<typeof signupFormSchema>>({
             resolver: zodResolver(signupFormSchema),
@@ -35,7 +43,35 @@ export function SignupForm({
             }
     })
 
-    const onSubmit = (values: z.infer<typeof signupFormSchema>) => {
+    const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
+      setIsLoading(true)
+
+      try {
+        const cleanValues = {
+          name: values.name.trim(),
+          email: values.email.trim(),
+          password: values.password.trim()
+        }
+
+        const res = await axios.post("https://mss-express.onrender.com/api/auth/signup", cleanValues)
+       
+        toast('Successfully Signed in ✅')
+
+        setTimeout(()=> {
+        router.push('/login')
+        }, 1500)
+
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          
+          const axiosError = error as AxiosError
+          toast(`Error ${axiosError.response?.status}: ${axiosError.response?.data}`)
+        } else {
+          toast('An unexpected error appeared')
+        }
+      } finally{
+        setIsLoading(false)
+      }
 
         console.log(values)
     }
@@ -93,8 +129,8 @@ export function SignupForm({
                         </FormItem> )} />
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
-                  Sign up
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading? "Signing up..." : "Sign up"}
                 </Button>
               </div>
             </div>

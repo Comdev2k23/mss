@@ -26,6 +26,7 @@ import Link from "next/link";
 import axios, {AxiosError} from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export function LoginForm({
   className,
@@ -67,11 +68,16 @@ export function LoginForm({
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
 
-      router.push('/dashboard');
+      toast('Successfully login ✅')
+
+      setTimeout(()=> {
+        router.push('/dashboard')
+      }, 1500)
+
     } catch (err) {
      if (axios.isAxiosError(err)) {
           const axiosErr = err as AxiosError
-          setError(`Error ${axiosErr.response?.status}: ${axiosErr.response?.data}`)
+          toast(`Error ${axiosErr.response?.status} invalid credentials 🚫`)
       }
     } finally {
       setIsLoading(false);

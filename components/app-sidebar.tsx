@@ -51,11 +51,14 @@ export function AppSidebar() {
   function handleLogout() {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
-    router.push("/login")
 
     toast("Logged out", {
       description: "You have been successfully logged out.",
     })
+
+    setTimeout(()=> {
+      router.push("/login")
+    }, 1500)
   }
 
   const menuItems: MenuItem[] = [
