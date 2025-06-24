@@ -13,7 +13,16 @@ export const loginFormSchema = z.object({
     password: z.string().min(6, "Password must at least 6 characters")
 })
 
-
+export const scheduleFormSchema = z.object({
+  studentName: z.string().min(1, 'Student name is required'),
+  section: z.string().min(1, 'Section is required'),
+  manuscriptTitle: z.string().min(1, 'Manuscript title is required'),
+  adviser: z.string().min(1, 'Adviser is required'),
+  panelMembers: z.array(z.string()).min(1, '3 panel members are required'),
+  defenseDate: z.string().min(1, 'Defense date is required'),
+  defenseTime: z.string().min(2, 'Time is required'),
+  room: z.string().min(1, 'Room is required')
+})
 
 export type Schedule = {
   _id: string

@@ -12,7 +12,7 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 import { Button } from './ui/button'
-import { LogOutIcon } from 'lucide-react'
+import { HamburgerIcon, LogOutIcon, MenuIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
@@ -37,7 +37,9 @@ export default function StudentNavbar() {
         <NavigationMenu>
   <NavigationMenuList>
     <NavigationMenuItem>
-      <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+      <NavigationMenuTrigger >
+        <MenuIcon />
+      </NavigationMenuTrigger>
       <NavigationMenuContent>
         <NavigationMenuLink>Link</NavigationMenuLink>
       </NavigationMenuContent>

@@ -62,6 +62,9 @@ const handleCopySchedId = (schedId:string) => {
      toast("Schedule deleted", {
     description: "Selected schedule deleted  successfully✅.",
     })
+    setTimeout(()=> {
+      location.reload()
+    }, 1500)
   } catch (error) {
     console.error("Failed to delete schedule:", error)
   }
