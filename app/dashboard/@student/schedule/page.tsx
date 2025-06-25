@@ -126,10 +126,9 @@ export default function StudentSchedule() {
               </li>))}
                         </div>
                     </CardContent>
-                  <CardContent className='flex justify-center gap-2'>
-                    <Button>Update</Button>
+                  <CardContent className='flex justify-center '>
                    <AlertDialog >
-  <AlertDialogTrigger className='bg-red-500 hover:bg-muted px-2 rounded-lg'>Cancel</AlertDialogTrigger>
+  <AlertDialogTrigger className='bg-red-500 hover:bg-muted p-2 rounded-lg'>Cancel</AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
       <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
