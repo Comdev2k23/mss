@@ -1,4 +1,4 @@
-import ScheduleForm from '@/components/ui/schedule-form'
+import ScheduleForm from '@/components/schedule-form'
 import React from 'react'
 
 export default function StudentPage() {

@@ -12,9 +12,10 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
 import { Button } from './ui/button'
-import { HamburgerIcon, LogOutIcon, MenuIcon } from 'lucide-react'
+import { Calendar, Clipboard, ClipboardCheck, HamburgerIcon, LogOutIcon, MenuIcon, PlusIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export default function StudentNavbar() {
     
@@ -40,14 +41,31 @@ export default function StudentNavbar() {
       <NavigationMenuTrigger >
         <MenuIcon />
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <NavigationMenuLink>Link</NavigationMenuLink>
+      <NavigationMenuContent className='w-36 flex-col items-center'>
+        <div className='flex items-center'>
+          <PlusIcon  size={14}/> 
+       <NavigationMenuLink href='/dashboard' >
+       Schedule
+      </NavigationMenuLink>
+        </div>
+         <div className='flex items-center'>
+          <Calendar  size={14}/> 
+       <NavigationMenuLink href='/dashboard/calendar' >
+       Calendar
+      </NavigationMenuLink>
+        </div>
+         <div className='flex items-center w-36'>
+          <ClipboardCheck  size={14}/> 
+       <NavigationMenuLink href='/dashboard/schedule' >
+       My Schedule
+      </NavigationMenuLink>
+        </div>
       </NavigationMenuContent>
     </NavigationMenuItem>
-    <NavigationMenuItem>
+    <NavigationMenuItem className='ml-1'>
         <Button className='bg-red-400' variant={'ghost'} onClick={handleLogout}>
             <LogOutIcon />
-            Logout</Button>
+            </Button>
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>

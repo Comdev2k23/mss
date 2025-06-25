@@ -68,7 +68,7 @@ export function LoginForm({
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
 
-      toast('Successfully login ✅')
+      toast.success('Successfully login')
 
       setTimeout(()=> {
         router.push('/dashboard')

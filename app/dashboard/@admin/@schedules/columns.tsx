@@ -59,8 +59,8 @@ const handleCopySchedId = (schedId:string) => {
       }
     )
     console.log("Deleted:", res.data)
-     toast("Schedule deleted", {
-    description: "Selected schedule deleted  successfully✅.",
+     toast.success("Schedule deleted", {
+    description: "Selected schedule deleted  successfully.",
     })
     setTimeout(()=> {
       location.reload()
