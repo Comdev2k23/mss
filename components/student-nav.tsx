@@ -25,7 +25,7 @@ export default function StudentNavbar() {
     localStorage.removeItem("token")
     localStorage.removeItem("role")
 
-    toast("Logged out", {
+    toast.success("Logged out", {
       description: "You have been successfully logged out.",
     })
 

@@ -4,9 +4,11 @@ import React, { useState } from "react"
 import StudentNavbar from "@/components/student-nav"
 import { Button } from "@/components/ui/button"
 import { MenuIcon, XIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function StudentLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
 
   return (
     <main className="flex h-screen w-full">
