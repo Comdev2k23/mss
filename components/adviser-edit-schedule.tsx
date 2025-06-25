@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -72,9 +72,9 @@ export default function AdviserEditSchedule({ schedId, className }: AdviserEditS
     try {
       const token = localStorage.getItem('token')
 
-     const res =  await axios.patch(
+      await axios.patch(
         `https://mss-express.onrender.com/api/schedules/adviser/update-status/${schedId}`,
-        { status: schedule?.adviserStatus }, // Only patch adviserStatus
+        { status: schedule?.adviserStatus },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -82,10 +82,10 @@ export default function AdviserEditSchedule({ schedId, className }: AdviserEditS
         }
       )
       toast.success("Adviser status has been updated")
-      setTimeout(()=> {
-         router.push("/dashboard/schedules")
+      setTimeout(() => {
+        router.push("/dashboard/schedules")
       }, 1500)
-     
+
     } catch (error) {
       console.error("Failed to update adviser status:", error)
       toast.error('Failed to update Adviser Status')
@@ -99,18 +99,19 @@ export default function AdviserEditSchedule({ schedId, className }: AdviserEditS
   }
 
   return (
-    <div className={cn("flex w-1/2 justify-center flex-col gap-6", className)}>
-      <Card className="w-full mt-10 justify-center">
+    <div className={cn("flex justify-center items-center min-h-screen p-4", className)}>
+      <Card className="w-full max-w-2xl p-4">
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Update Adviser Status</CardTitle>
+          <CardTitle className="text-xl md:text-2xl">Update Adviser Status</CardTitle>
           <CardDescription>
             Modify the adviser status of the selected manuscript schedule.
           </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit} className="grid gap-6">
-            <div className="grid gap-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label>Student Name</Label>
                 <Input value={schedule.studentName} disabled />
@@ -120,7 +121,9 @@ export default function AdviserEditSchedule({ schedId, className }: AdviserEditS
                 <Label>Section</Label>
                 <Input value={schedule.section} disabled />
               </div>
+            </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label>Adviser</Label>
                 <Input value={schedule.adviser} disabled />
@@ -130,38 +133,38 @@ export default function AdviserEditSchedule({ schedId, className }: AdviserEditS
                 <Label>Manuscript Title</Label>
                 <Input value={schedule.manuscriptTitle} disabled />
               </div>
+            </div>
 
-              <div className="grid gap-2">
-                <Label>Adviser Status</Label>
-                <Select
-                  value={schedule.adviserStatus}
-                  onValueChange={(value) => setSchedule({ ...schedule, adviserStatus: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select adviser status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="approved">Approved</SelectItem>
-                    <SelectItem value="rejected">Rejected</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="grid gap-2">
+              <Label>Adviser Status</Label>
+              <Select
+                value={schedule.adviserStatus}
+                onValueChange={(value) => setSchedule({ ...schedule, adviserStatus: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select adviser status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="approved">Approved</SelectItem>
+                  <SelectItem value="rejected">Rejected</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-              <div className="flex gap-4">
-                <Button
-                  type="button"
-                  variant="secondary"
-                  className="w-1/2"
-                  onClick={() => router.push("/dashboard")}
-                >
-                  Cancel
-                </Button>
+            <div className="flex flex-col md:flex-row gap-4">
+              <Button
+                type="button"
+                variant="secondary"
+                className="w-full md:w-1/2"
+                onClick={() => router.push("/dashboard")}
+              >
+                Cancel
+              </Button>
 
-                <Button type="submit" className="w-1/2" disabled={loading}>
-                  {loading ? "Applying..." : "Apply Changes"}
-                </Button>
-              </div>
+              <Button type="submit" className="w-full md:w-1/2" disabled={loading}>
+                {loading ? "Applying..." : "Apply Changes"}
+              </Button>
             </div>
           </form>
         </CardContent>

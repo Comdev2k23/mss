@@ -81,71 +81,107 @@ export default function StudentSchedule() {
         fetchMySchedule()
     }, [])
   return (
-    <div className='flex-col justify-center items-center min-h-screen p-4 gap-2 w-1/2'>
-        {schedules.length === 0 ? 
-                <Alert variant="default">
-  
-        <AlertTitle className='flex gap-2 items-center'><ClipboardX size={15} /> No schedule yet</AlertTitle>
-        <AlertDescription>
-            You don't have submitted schedule yet. Please add new schedule and view to this Page.
-        </AlertDescription>
-        </Alert> : ''}
-        {schedules.map((schedule)=> (
-                <Card key={schedule._id} className='w-full max-w-2xl p-4'>
-                    <CardContent>
-                        <CardTitle>Student Name:</CardTitle> <p>{schedule.studentName}</p>
-                    </CardContent>
-                    <CardContent>
-                       <CardTitle>Section:</CardTitle> <p>{schedule.section}</p>
-                    </CardContent>
-                    <CardContent>
-                       <CardTitle>Manuscript title:</CardTitle> <p>{schedule.manuscriptTitle}</p>
-                    </CardContent>
-                    <CardContent>
-                        <CardTitle>Adviser:</CardTitle> <p>{schedule.adviser}</p>
-                    </CardContent>
-                      <CardContent>
-                        <CardTitle>Status:</CardTitle> <p>{schedule.status}</p>
-                    </CardContent>
-                      <CardContent>
-                        <div>
-                {schedule.panelStatus.map((panel, i) => (
-              <li key={i} className="flex justify-between">
-                <span>{panel.name}</span>
-                <span
-                  className={
+   <div className="flex flex-col items-center min-h-screen p-4 gap-4 w-full md:w-3/4 lg:w-1/2 mx-auto">
+  {schedules.length === 0 ? (
+    <Alert variant="default" className="w-full max-w-2xl">
+      <AlertTitle className="flex gap-2 items-center">
+        <ClipboardX size={15} /> No schedule yet
+      </AlertTitle>
+      <AlertDescription>
+        You don't have any submitted schedule yet. Please add a new schedule and view it on this page.
+      </AlertDescription>
+    </Alert>
+  ) : null}
+
+  {schedules.map((schedule) => (
+    <Card key={schedule._id} className="w-full max-w-2xl p-4">
+      <CardContent>
+        <CardTitle>Student Name:</CardTitle>
+        <p className="break-words">{schedule.studentName}</p>
+      </CardContent>
+
+      <CardContent>
+        <CardTitle>Section:</CardTitle>
+        <p className="break-words">{schedule.section}</p>
+      </CardContent>
+
+      <CardContent>
+        <CardTitle>Manuscript Title:</CardTitle>
+        <p className="break-words">{schedule.manuscriptTitle}</p>
+      </CardContent>
+
+    <CardContent>
+  <CardTitle>Defense Date:</CardTitle>
+  <p className="break-words">
+    {new Date(schedule.defenseDate).toLocaleString("en-PH", {
+      timeZone: "Asia/Manila",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    })}
+  </p>
+</CardContent>
+
+
+      <CardContent>
+        <CardTitle>Adviser:</CardTitle>
+        <p className="break-words">{schedule.adviser}</p>
+      </CardContent>
+
+      <CardContent>
+        <CardTitle>Status:</CardTitle>
+        <p className="break-words">{schedule.status}</p>
+      </CardContent>
+
+      <CardContent>
+        <CardTitle>Panel Status:</CardTitle>
+        <ul className="space-y-1">
+          {schedule.panelStatus.map((panel, i) => (
+            <li key={i} className="flex justify-between">
+              <span>{panel.name}</span>
+              <span
+                className={`
+                  ${
                     panel.status === "approved"
                       ? "text-green-600"
                       : panel.status === "rejected"
                       ? "text-red-600"
                       : "text-yellow-600"
                   }
-                >
-                  {panel.status}
-                </span>
-              </li>))}
-                        </div>
-                    </CardContent>
-                  <CardContent className='flex justify-center '>
-                   <AlertDialog >
-  <AlertDialogTrigger className='bg-red-500 hover:bg-muted p-2 rounded-lg'>Cancel</AlertDialogTrigger>
-  <AlertDialogContent>
-    <AlertDialogHeader>
-      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-      <AlertDialogDescription>
-        This action cannot be undone. This will permanently delete this schedule
-        and remove your data from our servers.
-      </AlertDialogDescription>
-    </AlertDialogHeader>
-    <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction onClick={()=> handleDelete(schedule._id)}>Continue</AlertDialogAction>
-    </AlertDialogFooter>
-  </AlertDialogContent>
-</AlertDialog>
-                  </CardContent>
-                </Card>
-            ))}
-    </div>
+                `}
+              >
+                {panel.status}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+
+      <CardContent className="flex justify-center">
+        <AlertDialog>
+          <AlertDialogTrigger className="bg-red-500 hover:bg-muted p-2 rounded-lg text-white">
+            Cancel
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete this schedule and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => handleDelete(schedule._id)}>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </CardContent>
+    </Card>
+  ))}
+</div>
+
   )
 }

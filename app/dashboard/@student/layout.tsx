@@ -38,7 +38,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
       </div>
 
       {/* Page Content */}
-      <div className="flex-1 overflow-y-auto p-4 ml-0 lg:ml-64 w-full">
+      <div className="flex-1 overflow-y-auto p-4 ml-0 lg:ml-2 w-full">
         {/* Mobile Menu Button */}
         <div className="lg:hidden mb-4">
           <Button variant="outline" size="icon" onClick={() => setIsSidebarOpen(true)}>
