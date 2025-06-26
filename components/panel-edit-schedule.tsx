@@ -167,6 +167,7 @@ export default function PanelEditSchedule({ schedId, className }: PanelEditSched
                   <SelectValue placeholder="Select your status" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="pending" disabled>Pending</SelectItem>
                   <SelectItem value="approved">Approved</SelectItem>
                   <SelectItem value="rejected">Rejected</SelectItem>
                 </SelectContent>

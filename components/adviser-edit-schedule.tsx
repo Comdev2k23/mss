@@ -145,7 +145,7 @@ export default function AdviserEditSchedule({ schedId, className }: AdviserEditS
                   <SelectValue placeholder="Select adviser status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="pending" disabled>Pending</SelectItem>
                   <SelectItem value="approved">Approved</SelectItem>
                   <SelectItem value="rejected">Rejected</SelectItem>
                 </SelectContent>
