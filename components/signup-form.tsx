@@ -48,7 +48,7 @@ export function SignupForm({
 
       try {
         const cleanValues = {
-          name: values.name.trim(),
+          name: values.name.trim().toLowerCase(),
           email: values.email.trim(),
           password: values.password.trim()
         }

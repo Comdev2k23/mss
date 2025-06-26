@@ -52,8 +52,11 @@ export default function ScheduleForm() {
         return
       }
 
+      // ✅ Lowercase the adviser to prevent conflicts
+      const adviser = data.adviser.trim().toLowerCase()
+
       const combinedDateTime = new Date(`${data.defenseDate}T${data.defenseTime}`)
-      const payload = { ...data, defenseDate: combinedDateTime.toISOString() }
+      const payload = { ...data, adviser, defenseDate: combinedDateTime.toISOString() }
 
       await axios.post("https://mss-express.onrender.com/api/schedules/new-schedule", payload, {
         headers: { Authorization: `Bearer ${token}` },
@@ -69,7 +72,7 @@ export default function ScheduleForm() {
   }
 
   const addPanelMember = () => {
-    const trimmedInput = panelInput.trim()
+    const trimmedInput = panelInput.trim().toLowerCase()
     if (trimmedInput && !form.getValues("panelMembers").includes(trimmedInput)) {
       form.setValue("panelMembers", [...form.getValues("panelMembers"), trimmedInput])
       setPanelInput("")
@@ -91,9 +94,8 @@ export default function ScheduleForm() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
-              {/* Student Name and Section - Responsive */}
+              {/* Student Name and Section */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Student Name */}
                 <FormField
                   control={form.control}
                   name="studentName"
@@ -108,7 +110,6 @@ export default function ScheduleForm() {
                   )}
                 />
 
-                {/* Section */}
                 <FormField
                   control={form.control}
                   name="section"
@@ -191,9 +192,8 @@ export default function ScheduleForm() {
                 <FormMessage />
               </FormItem>
 
-              {/* Defense Date and Time - Responsive */}
+              {/* Defense Date and Time */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* Defense Date */}
                 <FormField
                   control={form.control}
                   name="defenseDate"
@@ -220,7 +220,6 @@ export default function ScheduleForm() {
                   )}
                 />
 
-                {/* Defense Time */}
                 <FormField
                   control={form.control}
                   name="defenseTime"
