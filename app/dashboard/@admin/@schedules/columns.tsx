@@ -44,7 +44,7 @@ const btnUpdate = {
 
 const handleCopySchedId = (schedId:string) => {
   navigator.clipboard.writeText(schedId)
-  toast("Schedule ID Copied ✅ ")
+  toast.success("Schedule ID Copied ")
 }
 
   const deleteSchedule = async (schedId: string) => {
@@ -66,7 +66,8 @@ const handleCopySchedId = (schedId:string) => {
       location.reload()
     }, 1500)
   } catch (error) {
-    console.error("Failed to delete schedule:", error)
+    toast.error("Failed to delete schedule:")
+
   }
 }
 

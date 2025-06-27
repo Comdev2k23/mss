@@ -6,9 +6,18 @@ import { columns, Schedule } from "./columns"
 import { DataTable } from "./data-table"
 import { toast } from "sonner"
 
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select"
+
 export default function PanelSchedulePage() {
   const [data, setData] = useState<Schedule[]>([])
   const [loading, setLoading] = useState(true)
+  const [statusFilter, setStatusFilter] = useState("All")
 
   useEffect(() => {
     async function getData() {
@@ -27,8 +36,8 @@ export default function PanelSchedulePage() {
 
         setData(res.data)
       } catch (error) {
-        toast.error("Failed to schedules")
-        console.error("Failed to schedules:", error)
+        toast.error("Failed to fetch schedules")
+        console.error("Failed to fetch schedules:", error)
       } finally {
         setLoading(false)
       }
@@ -41,9 +50,31 @@ export default function PanelSchedulePage() {
     return <p className="text-center py-10">Loading Schedules...</p>
   }
 
+  // ✅ Fix: use 'data' instead of 'schedules'
+  const filteredSchedules = data.filter((sched) =>
+    statusFilter === "All"
+      ? true
+      : sched.status.toLowerCase() === statusFilter.toLowerCase()
+  )
+
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <div className="flex justify-end mb-4">
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Filter by status" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="All">All</SelectItem>
+            <SelectItem value="Approved">Approved</SelectItem>
+            <SelectItem value="Pending">Pending</SelectItem>
+            <SelectItem value="Rejected">Rejected</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <h1 className="text-2xl font-bold mb-4">Panel Schedule List</h1>
+      <DataTable columns={columns} data={filteredSchedules} />
     </div>
   )
 }

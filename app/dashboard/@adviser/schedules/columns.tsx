@@ -59,7 +59,7 @@ import Link from "next/link"
 
 const handleCopyUserId = (userId:string) => {
   navigator.clipboard.writeText(userId)
-  toast("User ID Copied ✅ ")
+  toast.success("User ID Copied ")
 }
 
 //   const deleteUser = async (: string) => {
