@@ -47,18 +47,22 @@ export default function Home() {
         </div>
       </div>
 
-     {/* Hero Image */}
-<div className="relative hidden bg-muted lg:flex items-center justify-center">
-  <div className="max-w-[500px] w-full ">
-   <Image
-  className="object-cover h-full w-full"
-  src="/hero.png"
-  alt="Hero"
-  fill
-  priority
+      {/* Hero Image */}
+<div className="hidden bg-muted lg:flex items-center justify-center">
+  <div className="relative w-full h-screen"> {/* Full viewport height */}
+    <Image
+      className="object-cover"
+      src="/hero.png"
+      alt="Hero"
+      fill
+      priority
+      sizes="(max-width: 1024px) 0px, 50vw"
     />
   </div>
 </div>
+
+
+
 
     </div>
   )
